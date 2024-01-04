@@ -15,9 +15,11 @@
 // along with the Leo library. If not, see <https://www.gnu.org/licenses/>.
 
 use super::*;
-use leo_ast::ProgramId;
 use leo_package::root::Env;
-use snarkvm::{prelude::{Address, PrivateKey, ViewKey}, console::{network::Testnet3, program::ProgramID}};
+use snarkvm::{
+    console::{network::Testnet3, program::ProgramID},
+    prelude::{Address, PrivateKey, ViewKey},
+};
 
 use rand::SeedableRng;
 use rand_chacha::ChaChaRng;
@@ -43,9 +45,7 @@ pub enum Account {
         write: bool,
     },
     /// Derive an Aleo address from a program
-    Program {
-        program_name: String
-    }
+    Program { program_name: String },
 }
 
 impl Command for Account {
@@ -91,9 +91,9 @@ impl Command for Account {
                     write_to_env_file(private_key, &ctx)?;
                 }
             }
-            Account::Program { program_name} => {
+            Account::Program { program_name } => {
                 // Derive the view key and address and print to stdout.
-                let program_id =  ProgramID::<Testnet3>::try_from(program_name)?;
+                let program_id = ProgramID::<Testnet3>::try_from(program_name)?;
                 println!("{:?}", program_id.to_address().unwrap());
             }
         }
